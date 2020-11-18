@@ -1,0 +1,19 @@
+<h1>Listing Options</h1>
+
+<table>
+  <tr>
+    <th>Option</th>
+    
+    <th></th>
+  </tr>
+ 
+  <% @options.each do |page| %>
+    <tr>
+      <td><%= page.title %></td>
+      
+     <!--  # <td><%= link_to 'Show', option_path(page) %></td> -->
+    </tr>
+  <% end %>
+  <%= @options.length%>
+</table>
+
