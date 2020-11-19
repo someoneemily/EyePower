@@ -8,6 +8,16 @@ class PagesController < ApplicationController
 
 	def index
     	@pages = Page.all
+    	if params[:time]
+    		print "here!"
+    		@time = params[:time]
+    	else
+    		print "not here"
+    		@time = 1
+    	end
+    	render json: {
+		      blinks: @pages.length
+		    }.to_json
   	end
 
 	def show
@@ -15,10 +25,15 @@ class PagesController < ApplicationController
 	end
 
 	def create
+	  	print("in create #{Time.now}")
 	  @page = Page.new(params.permit(:title))
- 
+ 	  @currentTime = Time.now
+	  
+	  print("the #{@page.title}")
+	  
 	  @page.save
-	  redirect_to @page
+	  render json: {response: @page.title}
+	  # redirect_to pages_path, time: Time.now
 	end
 
 end
