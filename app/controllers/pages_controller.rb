@@ -15,9 +15,9 @@ class PagesController < ApplicationController
     		print "not here"
     		@time = 1
     	end
-    	render json: {
-		      blinks: @pages.length
-		    }.to_json
+    	# render json: {
+		   #    blinks: @pages.length
+		   #  }.to_json
   	end
 
 	def show
