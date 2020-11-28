@@ -1,0 +1,94 @@
+
+<html>
+  <head>
+    <title>Choice B</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="/assets/jquery.js" type="text/javascript"></script>
+    <script src="/assets/jquery_ujs.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </head>
+  <body>
+   
+   <!--  <div class="jumbotron text-center">
+      <h1>Input Simulation</h1>
+      <p>Click to simulate number of blinks</p> 
+      <button type="button" class="btn btn-success">Success</button>
+      <a ><input class="btn btn-info" onClick="myFunction()" type="button" value="Blink"></a>
+      <p id="demo"></p>
+    </div> -->
+      
+    <div class="container jumbotron text-center">
+      <center>
+      
+        <h1>Choice B</h1>
+
+        <%= javascript_pack_tag 'my_js' %>
+        <div class="container jumbotron">
+          <a href="/"><input class="btn btn-light" id="button1" type="button" value="2 blinks to go Back"></a>
+        </div>
+      </center>
+    </div>
+  </body>
+  <script >
+  
+    var count= 0;
+    var prev = 0;
+    var diff = 0;
+    var current = 0;
+    var newBlink = true;
+
+    function reset(){
+      console.log("reset");
+      newBlink = true;
+      if(current!=prev){
+        document.getElementById("actual").innerHTML = "Final Choice: "+document.getElementById("button"+(((current-prev)-1)%4+1)).value;
+        // document.getElementById("demo").innerHTML = "Simulating "+count+" blinks";
+      }
+      prev = current;
+      location = "/choiceA"  
+
+    }
+
+    // auto refresh 
+    setInterval(function(){
+     
+     //TODO: uncomment for actual demo! 
+      Rails.ajax({
+        url: "/pages",
+        type: "get",
+        data: "",
+        success: function(data) {
+          current = data.blinks;
+          console.log(prev+" " +current);
+          if(prev<current){
+            
+            // only start simulating button clicks if the user is starting to blink (initial refresh will yield a big diff between prev at 0 and current at 100+)
+            if((current-prev<10)){
+              //group together 2 blinks
+              console.log(prev+" " +current);
+              if((current-prev)>=2){
+              	document.getElementById("button1").className = "btn btn-dark";
+              	location = '/';
+              }
+              else{
+              	prev = current;
+              }
+            }else{
+              prev = current;
+            }
+            
+            
+          }
+        },
+        error: function(data) {console.log("this was an error");}
+      })
+    },1500); 
+
+  </script>
+</html>
+
