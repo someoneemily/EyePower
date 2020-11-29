@@ -24,11 +24,11 @@
     <div class="container jumbotron text-center">
       <center>
       
-        <h1>Choices</h1>
+        <h1>Important Choices</h1>
 
         <%= javascript_pack_tag 'my_js' %>
         <div class="container jumbotron">
-          <a href="/choiceA" id="btn1"><input href="/choiceA" class="btn btn-light" id="button1" type="button" value="Turn on Kitchen Light"></a>
+          <a href = "/choiceA" id="btn1"><input href="/choiceA" class="btn btn-light" id="button1" type="button" value="Go To 6.810 Website"></a>
           <p></p>
           <a href="/choiceB" id="btn2" ><input href="/choiceA" class="btn btn-light" id="button2" type="button" value="Lock Front Door"></a>
           <p></p>
@@ -77,10 +77,6 @@
         location = document.getElementById("btn"+(((current-prev)-1)%4+1)).href;
       }
       prev = current;
-
-      
-      
-
     }
 
     // setInterval(function(){
