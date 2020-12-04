@@ -33,8 +33,8 @@ class PagesController < ApplicationController
 	  print("the #{@page.title}")
 	  
 	  @page.save
-	  # render json: {response: @page.title}
-	  redirect_to pages_path
+	  render json: {response: @page.title}
+	  # redirect_to pages_path
 	end
 
 end

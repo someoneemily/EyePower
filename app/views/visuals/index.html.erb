@@ -1,7 +1,6 @@
-
 <html>
   <head>
-    <title>Choice B</title>
+    <title>Wira</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -25,18 +24,16 @@
     <div class="container jumbotron text-center">
       <center>
       
-        <h1>Emotions/Caretaking Requests</h1>
+        <h1>Visuals Choices</h1>
 
         <%= javascript_pack_tag 'my_js' %>
         <div class="container jumbotron">
-          <a href="/" id = "btn1"><input class="btn btn-light" id="button1" type="button" value="I'm doing well!"></a>
+          <a href="/" id="btn1" ><input href="/" class="btn btn-light" id="button1" type="button" value="Go Back"></a>
           <p></p>
-          <a href = "/" id="btn2"><input href="/visuals/weather" class="btn btn-light" id="button2" type="button" value="I'd like a cup of water"></a>
+          <a href = "/visuals/weather" id="btn2"><input href="/visuals/weather" class="btn btn-light" id="button2" type="button" value="Weather"></a>
           <p></p>
-          <a href="/" id="btn3" ><input href="/visuals/photos" class="btn btn-light" id="button3" type="button" value="I'd like a snack"></a>
+          <a href="/visuals/photos" id="btn3" ><input href="/visuals/photos" class="btn btn-light" id="button3" type="button" value="Photos Album"></a>
           <p id="actual"></p>
-          <a href = "/" id="btn4"><input href="/" class="btn btn-light" id="button4" type="button" value="Go Back"></a>
-          <p></p>
         </div>
       </center>
     </div>
@@ -48,31 +45,41 @@
     var diff = 0;
     var current = 0;
     var newBlink = true;
+    function myFunction() {
+      console.log("here");
+      count++;
+      if(count>1){
+        document.getElementById("demo").innerHTML = "Simulating "+count+" blinks";
+      }
+      else{
+        document.getElementById("demo").innerHTML = "Simulating "+count+" blink";
+      }
+      var i;
+      for(i =1; i<=3; i++){
+        document.getElementById("button"+i).className = "btn btn-light";
+      }
+        
+        document.getElementById("button"+((count-1)%3+1)).className = "btn btn-dark";
+        document.getElementById("actual").innerHTML = "Selecting: "+document.getElementById("button"+((count-1)%3+1)).value;
 
-   function reset(){
+      // to confirm that this is indeed the choice
+      setTimeout(reset, 2500);
+    }
+
+    function reset(){
       console.log("reset");
       newBlink = true;
       if(current!=prev){
-        
-        prev = current;
-        
-        //if going back
-        if((current-prev)>=4){
-          location='/';
-        }else{
-          document.getElementById("actual").innerHTML = "Mood: "+document.getElementById("button"+(((current-prev)-1)%3+1)).value;
-          document.body.style.backgroundColor = "red";
-        }
-        // document.getElementById("actual").innerHTML = "Simulating "+count+" blinks";
-        // location = document.getElementById("btn"+(((current-prev)-1)%3+1)).href;
-        
+        document.getElementById("actual").innerHTML = "Final Choice: "+document.getElementById("button"+(((current-prev)-1)%3+1)).value;
+        // document.getElementById("demo").innerHTML = "Simulating "+count+" blinks";
+        location = document.getElementById("btn"+(((current-prev)-1)%3+1)).href;
       }
-      
+      prev = current;
     }
 
     // auto refresh 
     setInterval(function(){
-     document.body.style.backgroundColor = "white";
+     
      //TODO: uncomment for actual demo! 
       Rails.ajax({
         url: "/pages",
@@ -85,11 +92,11 @@
             
             // only start simulating button clicks if the user is starting to blink (initial refresh will yield a big diff between prev at 0 and current at 100+)
             if((current-prev<10)){
-              for(i =1; i<=4; i++){
+              for(i =1; i<=3; i++){
                 document.getElementById("button"+i).className = "btn btn-light";
               }
                 
-              document.getElementById("button"+(((current-prev)-1)%4+1)).className = "btn btn-dark";
+              document.getElementById("button"+(((current-prev)-1)%3+1)).className = "btn btn-dark";
               
               console.log("it's a new set of blinks"+newBlink);
               if(newBlink){

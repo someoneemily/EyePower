@@ -28,13 +28,13 @@
 
         <%= javascript_pack_tag 'my_js' %>
         <div class="container jumbotron">
-          <a href = "/choiceA" id="btn1"><input href="/choiceA" class="btn btn-light" id="button1" type="button" value="Go To 6.810 Website"></a>
+          <a href = "/visuals" id="btn1"><input href="/visuals" class="btn btn-light" id="button1" type="button" value="Checking Website"></a>
           <p></p>
-          <a href="/choiceB" id="btn2" ><input href="/choiceA" class="btn btn-light" id="button2" type="button" value="Lock Front Door"></a>
+          <a href="/choiceB" id="btn2" ><input href="/choiceA" class="btn btn-light" id="button2" type="button" value="Emotions/Caretaking Requests"></a>
           <p></p>
-          <a href="/choiceC" id="btn3"><input href="/choiceA" class="btn btn-light" id="button3" type="button" value="Turn on Heater"></a>
+          <a href="/words" id="btn3"><input href="/words" class="btn btn-light" id="button3" type="button" value="Free Expression"></a>
           <p></p>
-          <a href="/choiceD" id="btn4"><input href="/choiceA" class="btn btn-light" id="button4" type="button" value="Turn on TV"></a>
+          <!-- <a href="/choiceD" id="btn4"><input href="/choiceA" class="btn btn-light" id="button4" type="button" value="Turn on TV"></a> -->
           <p id="actual"></p>
         </div>
       </center>
@@ -57,12 +57,12 @@
         document.getElementById("demo").innerHTML = "Simulating "+count+" blink";
       }
       var i;
-      for(i =1; i<=4; i++){
+      for(i =1; i<=3; i++){
         document.getElementById("button"+i).className = "btn btn-light";
       }
         
-        document.getElementById("button"+((count-1)%4+1)).className = "btn btn-dark";
-        document.getElementById("actual").innerHTML = "Selecting: "+document.getElementById("button"+((count-1)%4+1)).value;
+        document.getElementById("button"+((count-1)%3+1)).className = "btn btn-dark";
+        document.getElementById("actual").innerHTML = "Selecting: "+document.getElementById("button"+((count-1)%3+1)).value;
 
       // to confirm that this is indeed the choice
       setTimeout(reset, 2500);
@@ -72,38 +72,13 @@
       console.log("reset");
       newBlink = true;
       if(current!=prev){
-        document.getElementById("actual").innerHTML = "Final Choice: "+document.getElementById("button"+(((current-prev)-1)%4+1)).value;
+        document.getElementById("actual").innerHTML = "Final Choice: "+document.getElementById("button"+(((current-prev)-1)%3+1)).value;
         // document.getElementById("demo").innerHTML = "Simulating "+count+" blinks";
-        location = document.getElementById("btn"+(((current-prev)-1)%4+1)).href;
+        location = document.getElementById("btn"+(((current-prev)-1)%3+1)).href;
       }
       prev = current;
     }
 
-    // setInterval(function(){
-    //   document.getElementById("actual").innerHTML = "Final Choice: "+document.getElementById("button"+(((current-prev)-1)%4+1)).value;
-    //   count = 0;
-      
-
-    // }, 4000);
-    // setTimeout(function(){
-    //   location = '';
-    
-    //   var next = posted.substring(posted.indexOf("|")+1);
-    //   for(i =1; i<=4; i++){
-    //     if(i!= parseInt(posted)%4+1){
-    //       document.getElementById("button"+i).className = "btn btn-light";
-    //     }
-    //   }
-    //   document.getElementById("button"+(parseInt(posted)%4+1)).className = "btn btn-dark";
-
-    //   //
-    //   if(next === "1"){
-    //     location.href = "new_page_path";
-    //   }
-    // }, 1000);
-    // setInterval(function(){
-    //   document.getElementById("demo").innerHTML = "Simulating "+(diff)+" blinks";
-    // }, 2500);
     // auto refresh 
     setInterval(function(){
      
@@ -113,19 +88,17 @@
         type: "get",
         data: "",
         success: function(data) {
-          // console.log(data.blinks);
-          // console.log(prev);
           current = data.blinks;
           console.log(prev+" " +current);
           if(prev<current){
             
             // only start simulating button clicks if the user is starting to blink (initial refresh will yield a big diff between prev at 0 and current at 100+)
             if((current-prev<10)){
-              for(i =1; i<=4; i++){
+              for(i =1; i<=3; i++){
                 document.getElementById("button"+i).className = "btn btn-light";
               }
                 
-              document.getElementById("button"+(((current-prev)-1)%4+1)).className = "btn btn-dark";
+              document.getElementById("button"+(((current-prev)-1)%3+1)).className = "btn btn-dark";
               
               console.log("it's a new set of blinks"+newBlink);
               if(newBlink){
@@ -140,9 +113,7 @@
             
             
           }
-
           //get the button highlighted here
-
         },
         error: function(data) {console.log("this was an error");}
       })

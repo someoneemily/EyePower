@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+     
+    <title>Online Keyboard</title>
+    <!-- <link rel="stylesheet" type="text/css" href="css/style.css" /> -->
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="/assets/jquery.js" type="text/javascript"></script>
+    <script src="/assets/jquery_ujs.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+</head>
+<body>
+	<center>
+	<h1>Free Expression</h1>
+	<%= javascript_pack_tag 'my_js' %>
+  <%= javascript_pack_tag 'keyboard' %>
+  <div class="jumbotron text-center">
+    <h1>Input Simulation</h1>
+    <p>Click to simulate number of blinks</p> 
+    <a ><input class="btn btn-info" id = "blinkBtn" onClick = "myFunction()" type="button" value="Blink"></a>
+    <p id="demo"></p>
+  </div>
+ 		<a href="/"><input class="btn btn-light" id="button1" type="button" value="4 blinks to go Back"></a>
+    <h3>1 blink to go right, 2 blinks to go down, 3 blinks to confirm</h3>
+	<div id="container">
+	    <textarea id="write" rows="6" cols="60"></textarea>
+	    <ul id="keyboard">
+	        <li id = "btn00" class="symbol"><span class="off">`</span><span class="on">~</span></li>
+	        <li id = "btn01" class="symbol"><span class="off">1</span><span class="on">!</span></li>
+	        <li id = "btn02" class="symbol"><span class="off">2</span><span class="on">@</span></li>
+	        <li id = "btn03" class="symbol"><span class="off">3</span><span class="on">#</span></li>
+	        <li id = "btn04" class="symbol"><span class="off">4</span><span class="on">$</span></li>
+	        <li id = "btn05" class="symbol"><span class="off">5</span><span class="on">%</span></li>
+	        <li id = "btn06" class="symbol"><span class="off">6</span><span class="on">^</span></li>
+	        <li id = "btn07" class="symbol"><span class="off">7</span><span class="on">&amp;</span></li>
+	        <li id = "btn08" class="symbol"><span class="off">8</span><span class="on">*</span></li>
+	        <li id = "btn09" class="symbol"><span class="off">9</span><span class="on">(</span></li>
+	        <li id = "btn010" class="symbol"><span class="off">0</span><span class="on">)</span></li>
+	        <li id = "btn011" class="symbol"><span class="off">-</span><span class="on">_</span></li>
+	        <li id = "btn012" class="symbol"><span class="off">=</span><span class="on">+</span></li>
+	        <li id = "btn013" class="delete lastitem">delete</li>
+	        <li id = "btn10" class="tab">tab</li>
+	        <li id = "btn11" class="letter">q</li>
+	        <li id = "btn12" class="letter">w</li>
+	        <li id = "btn13" class="letter">e</li>
+	        <li id = "btn14" class="letter">r</li>
+	        <li id = "btn15" class="letter">t</li>
+	        <li id = "btn16" class="letter">y</li>
+	        <li id = "btn17" class="letter">u</li>
+	        <li id = "btn18" class="letter">i</li>
+	        <li id = "btn19" class="letter">o</li>
+	        <li id = "btn110" class="letter">p</li>
+	        <li id = "btn111" class="symbol"><span class="off">[</span><span class="on">{</span></li>
+	        <li id = "btn112" class="symbol"><span class="off">]</span><span class="on">}</span></li>
+	        <li id = "btn113" class="symbol lastitem"><span class="off">\</span><span class="on">|</span></li>
+	        <li id = "btn20" class="capslock">caps lock</li>
+	        <li id = "btn21" class="letter">a</li>
+	        <li id = "btn22" class="letter">s</li>
+	        <li id = "btn23" class="letter">d</li>
+	        <li id = "btn24" class="letter">f</li>
+	        <li id = "btn25" class="letter">g</li>
+	        <li id = "btn26" class="letter">h</li>
+	        <li id = "btn27" class="letter">j</li>
+	        <li id = "btn28" class="letter">k</li>
+	        <li id = "btn29" class="letter">l</li>
+	        <li id = "btn210" class="symbol"><span class="off">;</span><span class="on">:</span></li>
+	        <li id = "btn211" class="symbol"><span class="off">'</span><span class="on">&quot;</span></li>
+	        <li id = "btn212" class="return lastitem">return</li>
+	        <li id = "btn30" class="left-shift">shift</li>
+	        <li id = "btn31" class="letter">z</li>
+	        <li id = "btn32" class="letter">x</li>
+	        <li id = "btn33" class="letter">c</li>
+	        <li id = "btn34" class="letter">v</li>
+	        <li id = "btn35" class="letter">b</li>
+	        <li id = "btn36" class="letter">n</li>
+	        <li id = "btn37" class="letter">m</li>
+	        <li id = "btn38" class="symbol"><span class="off">,</span><span class="on">&lt;</span></li>
+	        <li id = "btn39" class="symbol"><span class="off">.</span><span class="on">&gt;</span></li>
+	        <li id = "btn310" class="symbol"><span class="off">/</span><span class="on">?</span></li>
+	        <li id = "btn311" class="right-shift lastitem">shift</li>
+	        <li id = "btn40" class="space lastitem">space&nbsp;</li>
+	    </ul>
+
+	 <!-- </div> -->
+  </div>
+  </center>
+ 
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js">
+</script>
+<script >
+    var count= 0;
+    var prev = 0;
+    var diff = 0;
+    var current = 0;
+    var newBlink = true;
+    var row = 0;
+    var col = 0;
+    var prow = 0;
+    var pcol = 0;
+    var cols = [14, 14, 14, 12, 1];
+
+
+    function reset(){
+      console.log("reset");
+      newBlink = true;
+      if(current!=prev){
+        document.getElementById("actual").innerHTML = "Final Choice: "+document.getElementById("button"+(((current-prev)-1)%4+1)).value;
+        document.getElementById("demo").innerHTML = "Simulating "+count+" blinks";
+      }
+      prev = current;
+      location = "/choiceA"  
+
+    }
+
+    function myFunction() {
+      console.log("blinking");
+      Rails.ajax({
+        url: "/pages",
+        type: "post",
+        data: 'page[title]=title1',
+        success: function(data) {
+          console.log("blinked: "+data);
+        },
+        error: function(data) {
+          console.log("this was an error");
+        }
+    });
+    }
+   
+
+    // auto refresh 
+    setInterval(function(){
+     console.log("it's here");
+     //TODO: uncomment for actual demo! 
+      Rails.ajax({
+        url: "/pages",
+        type: "get",
+        data: "",
+        success: function(data) {
+          current = data.blinks;
+          console.log(prev+" " +current);
+          if(prev<current){
+            
+            // only start simulating button clicks if the user is starting to blink (initial refresh will yield a big diff between prev at 0 and current at 100+)
+            if((current-prev<10)){
+              //group together 2 blinks
+              
+              
+             
+              
+              
+
+              if((current-prev)==1){
+                col++;  
+              }
+
+              if((current-prev)==2){
+                row++;
+              }
+              row%=5;
+              col%=(cols[row]);
+              console.log(row+" " +col+"  "+prow+" " +pcol);
+              console.log(prev+" " +current);
+              document.getElementById('btn'+prow+pcol).style.borderColor= "#f9f9f9";
+              
+              prow = row;
+              pcol = col;
+              prow%=5;
+              pcol%=(cols[row]);
+              document.getElementById('btn'+row+col).style.borderColor= "#e5e5e5";
+
+              console.log(row+" " +col);
+              
+              if((current-prev)==3){
+                document.getElementById('btn'+row+col).click();
+              }
+              if((current-prev)>=4){
+                document.getElementById("button1").className = "btn btn-dark";
+                location = '/';
+              }
+              else{
+                prev = current;
+              }
+            }else{
+              prev = current;
+            }
+
+            // document.getElementById('btn1').click(); 
+            
+
+            
+            
+          }
+        },
+        error: function(data) {console.log("this was an error");}
+      })
+    },1200); 
+
+
+
+</script>
+<!-- <script type="text/javascript" src="js/keyboard.js"></script> -->
+</body>
+</html>
+<!-- from: https: //code.tutsplus.com/tutorials/creating-a-keyboard-with-css-and-jquery--net-5774-->
