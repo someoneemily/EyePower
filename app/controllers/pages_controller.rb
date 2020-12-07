@@ -17,7 +17,8 @@ class PagesController < ApplicationController
     		@time = 1
     	end
     	render json: {
-		      blinks: @pages.length
+		      response: @pages[-1].title,
+		      blinks:@pages.length
 		    }.to_json
   	end
 

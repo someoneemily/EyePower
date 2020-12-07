@@ -22,14 +22,14 @@
 	<h1>Free Expression</h1>
 	<%= javascript_pack_tag 'my_js' %>
   <%= javascript_pack_tag 'keyboard' %>
-  <div class="jumbotron text-center">
+<!--   <div class="jumbotron text-center">
     <h1>Input Simulation</h1>
     <p>Click to simulate number of blinks</p> 
     <a ><input class="btn btn-info" id = "blinkBtn" onClick = "myFunction()" type="button" value="Blink"></a>
     <p id="demo"></p>
-  </div>
- 		<a href="/"><input class="btn btn-light" id="button1" type="button" value="4 blinks to go Back"></a>
-    <h3>1 blink to go right, 2 blinks to go down, 3 blinks to confirm</h3>
+  </div> -->
+ 		<p>1 blink to go down, 2 blinks to click, 3 blinks to go back</p>
+    <p>Look left, right to navigate the keyboard</p>
 	<div id="container">
 	    <textarea id="write" rows="6" cols="60"></textarea>
 	    <ul id="keyboard">
@@ -101,6 +101,7 @@
     var diff = 0;
     var current = 0;
     var newBlink = true;
+    var blinks = 0;
     var row = 0;
     var col = 0;
     var prow = 0;
@@ -145,25 +146,30 @@
         type: "get",
         data: "",
         success: function(data) {
+          // new method 
           current = data.blinks;
-          console.log(prev+" " +current);
+          response = data.response;
+          console.log(prev+" " +current + " " +response);
+  
           if(prev<current){
             
             // only start simulating button clicks if the user is starting to blink (initial refresh will yield a big diff between prev at 0 and current at 100+)
             if((current-prev<10)){
               //group together 2 blinks
-              
-              
-             
-              
-              
-
-              if((current-prev)==1){
-                col++;  
+              if((current-prev)==1 && (response === "blink")){
+                row++ ;
               }
 
-              if((current-prev)==2){
-                row++;
+              if((response)=== "right"){
+                col++;
+                prev = current;
+              }
+              if((response) === "left"){
+                if(col == 0){
+                  col = cols[rows];
+                }
+                col--;
+                prev = current;
               }
               row%=5;
               col%=(cols[row]);
@@ -179,10 +185,10 @@
 
               console.log(row+" " +col);
               
-              if((current-prev)==3){
+              if((current-prev)==2){
                 document.getElementById('btn'+row+col).click();
               }
-              if((current-prev)>=4){
+              if((current-prev)>=3){
                 document.getElementById("button1").className = "btn btn-dark";
                 location = '/';
               }
@@ -192,12 +198,6 @@
             }else{
               prev = current;
             }
-
-            // document.getElementById('btn1').click(); 
-            
-
-            
-            
           }
         },
         error: function(data) {console.log("this was an error");}

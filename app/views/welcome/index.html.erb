@@ -25,14 +25,14 @@
       <center>
       
         <h1>Important Choices</h1>
-
+        <!-- <%= @pages[-1].title %> -->
         <%= javascript_pack_tag 'my_js' %>
         <div class="container jumbotron">
-          <a href = "/visuals" id="btn1"><input href="/visuals" class="btn btn-light" id="button1" type="button" value="Checking Website"></a>
+          <a href = "/visuals" id="btn0"><input href="/visuals" class="btn btn-light" id="button0" type="button" value="Checking Website"></a>
           <p></p>
-          <a href="/choiceB" id="btn2" ><input href="/choiceA" class="btn btn-light" id="button2" type="button" value="Emotions/Caretaking Requests"></a>
+          <a href="/choiceB" id="btn1" ><input href="/choiceA" class="btn btn-light" id="button1" type="button" value="Emotions/Caretaking Requests"></a>
           <p></p>
-          <a href="/words" id="btn3"><input href="/words" class="btn btn-light" id="button3" type="button" value="Free Expression"></a>
+          <a href="/words" id="btn2"><input href="/words" class="btn btn-light" id="button2" type="button" value="Free Expression"></a>
           <p></p>
           <!-- <a href="/choiceD" id="btn4"><input href="/choiceA" class="btn btn-light" id="button4" type="button" value="Turn on TV"></a> -->
           <p id="actual"></p>
@@ -45,6 +45,7 @@
     var count= 0;
     var prev = 0;
     var diff = 0;
+    var blinks = 0;
     var current = 0;
     var newBlink = true;
     function myFunction() {
@@ -68,16 +69,16 @@
       setTimeout(reset, 2500);
     }
 
-    function reset(){
-      console.log("reset");
-      newBlink = true;
-      if(current!=prev){
-        document.getElementById("actual").innerHTML = "Final Choice: "+document.getElementById("button"+(((current-prev)-1)%3+1)).value;
-        // document.getElementById("demo").innerHTML = "Simulating "+count+" blinks";
-        location = document.getElementById("btn"+(((current-prev)-1)%3+1)).href;
-      }
-      prev = current;
-    }
+    // function reset(){
+    //   console.log("reset");
+    //   newBlink = true;
+    //   if(current!=prev){
+    //     document.getElementById("actual").innerHTML = "Final Choice: "+document.getElementById("button"+(((current-prev)-1)%3+1)).value;
+    //     // document.getElementById("demo").innerHTML = "Simulating "+count+" blinks";
+    //     location = document.getElementById("btn"+(((current-prev)-1)%3+1)).href;
+    //   }
+    //   prev = current;
+    // }
 
     // auto refresh 
     setInterval(function(){
@@ -89,30 +90,57 @@
         data: "",
         success: function(data) {
           current = data.blinks;
-          console.log(prev+" " +current);
-          if(prev<current){
+          response = data.response;
+          console.log(prev+" " +current + " " +response);
+          // new method
+          if((current-prev)<5){ // randomly upper bound 5 blinks in a one second get command
+            if(current!=prev){
+              if(response === "blink"){
+                blinks ++;
+              }
             
-            // only start simulating button clicks if the user is starting to blink (initial refresh will yield a big diff between prev at 0 and current at 100+)
-            if((current-prev<10)){
-              for(i =1; i<=3; i++){
+              if(response === "right"){
+                location = document.getElementById("btn"+((blinks)%3)).href;
+              }
+              for(i =0; i<=2; i++){
                 document.getElementById("button"+i).className = "btn btn-light";
               }
-                
-              document.getElementById("button"+(((current-prev)-1)%3+1)).className = "btn btn-dark";
               
-              console.log("it's a new set of blinks"+newBlink);
-              if(newBlink){
-                console.log("setting a reset");
-                newBlink = false;
-                setTimeout(reset, 4200);
-              }
-            }else{
-              //know at least one diff because prev<current
-              prev = current;
             }
-            
-            
+            document.getElementById("button"+((blinks)%3)).className = "btn btn-dark";
           }
+          prev = current;
+          // old method
+          // if(prev<current){
+            
+          //   // only start simulating button clicks if the user is starting to blink (initial refresh will yield a big diff between prev at 0 and current at 100+)
+          //   if((current-prev<100)){
+          //     for(i =1; i<=3; i++){
+          //       document.getElementById("button"+i).className = "btn btn-light";
+          //     }
+                
+          //     document.getElementById("button"+(((current-prev)-1)%3+1)).className = "btn btn-dark";
+              
+          //     console.log("it's a new set of blinks"+newBlink);
+          //     // if(newBlink){
+          //     //   console.log("setting a reset");
+          //     //   newBlink = false;
+          //     //   // setTimeout(reset, 4200);
+          //     // }
+          //     if(response === "right"){
+          //       document.getElementById("actual").innerHTML = "Final Choice: "+document.getElementById("button"+(((current-prev)-1)%3+1)).value;
+          //       // document.getElementById("demo").innerHTML = "Simulating "+count+" blinks";
+          //       location = document.getElementById("btn"+(((current-prev)-1)%3+1)).href;
+          //       prev = current;
+          //     }
+
+          //   }else{
+          //     //know at least one diff because prev<current
+          //     prev = current;
+          //   }
+            
+            
+          // }
           //get the button highlighted here
         },
         error: function(data) {console.log("this was an error");}

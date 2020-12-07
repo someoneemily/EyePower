@@ -28,11 +28,11 @@
 
         <%= javascript_pack_tag 'my_js' %>
         <div class="container jumbotron">
-          <a href="/" id="btn1" ><input href="/" class="btn btn-light" id="button1" type="button" value="Go Back"></a>
+          
+          <p>Look left to go back</p>
+          <a href = "/visuals/weather" id="btn0"><input href="/visuals/weather" class="btn btn-light" id="button0" type="button" value="Weather"></a>
           <p></p>
-          <a href = "/visuals/weather" id="btn2"><input href="/visuals/weather" class="btn btn-light" id="button2" type="button" value="Weather"></a>
-          <p></p>
-          <a href="/visuals/photos" id="btn3" ><input href="/visuals/photos" class="btn btn-light" id="button3" type="button" value="Photos Album"></a>
+          <a href="/visuals/photos" id="btn1" ><input href="/visuals/photos" class="btn btn-light" id="button1" type="button" value="Photos Album"></a>
           <p id="actual"></p>
         </div>
       </center>
@@ -43,7 +43,8 @@
     var count= 0;
     var prev = 0;
     var diff = 0;
-    var current = 0;
+    var right = 0;
+    var blinks = 0;
     var newBlink = true;
     function myFunction() {
       console.log("here");
@@ -86,31 +87,53 @@
         type: "get",
         data: "",
         success: function(data) {
+          //new method
           current = data.blinks;
-          console.log(prev+" " +current);
-          if(prev<current){
-            
-            // only start simulating button clicks if the user is starting to blink (initial refresh will yield a big diff between prev at 0 and current at 100+)
-            if((current-prev<10)){
-              for(i =1; i<=3; i++){
+          response = data.response;
+          console.log(prev+" " +current + " " +response);
+          // new method
+          if((current-prev)<5){ // randomly upper bound 5 blinks in a one second get command
+            if(current!=prev){
+              if(response === "blink"){
+                blinks ++;
+              }
+              if(response === "right"){  
+                location = document.getElementById("btn"+(blinks%2)).href;
+              }
+              if(response === "left"){
+                location = "/";
+              }
+              for(i =0; i<=1; i++){
                 document.getElementById("button"+i).className = "btn btn-light";
               }
-                
-              document.getElementById("button"+(((current-prev)-1)%3+1)).className = "btn btn-dark";
-              
-              console.log("it's a new set of blinks"+newBlink);
-              if(newBlink){
-                console.log("setting a reset");
-                newBlink = false;
-                setTimeout(reset, 4000);
-              }
-            }else{
-              //know at least one diff because prev<current
-              prev = current;
             }
-            
-            
+            document.getElementById("button"+((blinks)%2)).className = "btn btn-dark";
           }
+          prev = current;
+
+          // if(prev<current){
+            
+          //   // only start simulating button clicks if the user is starting to blink (initial refresh will yield a big diff between prev at 0 and current at 100+)
+          //   if((current-prev<10)){
+          //     for(i =1; i<=3; i++){
+          //       document.getElementById("button"+i).className = "btn btn-light";
+          //     }
+                
+          //     document.getElementById("button"+(((current-prev)-1)%3+1)).className = "btn btn-dark";
+              
+          //     console.log("it's a new set of blinks"+newBlink);
+          //     if(newBlink){
+          //       console.log("setting a reset");
+          //       newBlink = false;
+          //       setTimeout(reset, 4000);
+          //     }
+          //   }else{
+          //     //know at least one diff because prev<current
+          //     prev = current;
+          //   }
+            
+            
+          // }
           //get the button highlighted here
         },
         error: function(data) {console.log("this was an error");}
