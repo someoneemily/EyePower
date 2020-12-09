@@ -16,10 +16,18 @@ class PagesController < ApplicationController
     		print "not here"
     		@time = 1
     	end
-    	render json: {
+    	if(@pages.length>0)
+    		render json: {
 		      response: @pages[-1].title,
 		      blinks:@pages.length
 		    }.to_json
+		else 
+			render json: {
+		      response: "",
+		      blinks:@pages.length
+		    }.to_json
+
+		end
   	end
 
 	def show
